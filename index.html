@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cerebro</title>
+    <link rel="stylesheet" type="text/css" href="index.css" />
+  </head>
+  <body>
+    <div id="login">
+      <div class="error">The e-mail or the password is invalid.</div>
+      <form id="login-form" novalidate>
+        <div id="email">
+          <label for="emailField">Email:</label>
+          <input
+            type="email"
+            id="emailField"
+            name="email"
+            required
+            autocomplete="email"
+          />
+          <div class="error">Invalid e-mail</div>
+        </div>
+
+        <div id="password">
+          <label for="passwordField">Password:</label>
+          <input
+            type="password"
+            id="passwordField"
+            name="password"
+            required
+            autocomplete="current-password"
+          />
+          <div class="error">The password should have at least 8 digits</div>
+        </div>
+
+        <div id="forgot-password">
+          <a href="forgot-password.html">Forgot my password</a>
+        </div>
+
+        <div id="submit">
+          <button type="submit">Login</button>
+        </div>
+
+        <div id="register">
+          <a href="register.html">Register</a>
+        </div>
+      </form>
+    </div>
+    <theme-roller></theme-roller>
+    <script src="index.js"></script>
+    <script type="module" src="scripts/theme-roller.js"></script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+:root {
+    --primary-color: #6a0dad;
+    --primary-color-hover: #4b0082;
+    --primary-background-color: #f9f9f9;
+    --background-color: #f9f9f9;
+    --border-color: #ccc;
+    --error-color: #ff4d4d;
+    --link-color: var(--primary-color);
+    --link-hover-color: var(--primary-color-hover);
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    --text-color: #333;
+}
+
+body.pink-theme {
+    --primary-color: #ff69b4;
+    --primary-color-hover: #ff1493;
+    --primary-background-color: #fff0f5;
+}
+
+body.purple-theme {
+    --primary-color: #6a0dad;
+    --primary-color-hover: #4b0082;
+    --primary-background-color: #f9f9f9;
+}
+
+body.blue-theme {
+    --primary-color: #007bff;
+    --primary-color-hover: #0056b3;
+    --primary-background-color: #e0f7ff;
+}
+
+body.green-theme {
+    --primary-color: #28a745;
+    --primary-color-hover: #218838;
+    --primary-background-color: #e6ffe6;
+}
+
+body.orange-theme {
+    --primary-color: #fd7e14;
+    --primary-color-hover: #e8590c;
+    --primary-background-color: #fff5e6;
+}
+
+body.dark-theme {
+    --primary-color: #2f343a; 
+    --primary-color-hover: #343a40;
+    --primary-background-color: #1c1c1c;
+    --background-color: #333;
+    --border-color: #444;
+    --error-color: #d04949;
+    --text-color: #c4bfbf;
+    --link-color: #1b79d7;
+    --link-hover-color: #63b8ff;
+    --box-shadow: 0 4px 8px rgba(148, 144, 144, 0.1); 
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 1em;
+    background-color: var(--background-color);
+    color: var(--text-color)
+}
+
+a {
+    color: var(--link-color);
+    transition: color 0.3s ease; 
+
+    :hover {
+        color: var(--link-hover-color);
+    }
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 0.625rem; 
+    margin-bottom: 0.625rem; 
+    border: 1px solid var(--border-color); 
+    border-radius: 0.375rem; 
+    box-sizing: border-box; 
+    font-size: 1rem; 
+    background-color: var(--background-color);
+}
+
+input[type="email"]:focus, input[type="password"]:focus {
+    border-color: var(--primary-color); 
+    outline: none; 
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.25);
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.75rem 1rem; 
+    background-color: var(--primary-color); 
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--primary-color-hover);
+}
