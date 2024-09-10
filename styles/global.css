@@ -71,10 +71,10 @@ body {
 a {
     color: var(--link-color);
     transition: color 0.3s ease; 
+}
 
-    :hover {
-        color: var(--link-hover-color);
-    }
+a:hover {
+    color: var(--link-hover-color);
 }
 
 input[type="email"], input[type="password"] {
