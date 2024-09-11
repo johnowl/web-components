@@ -6,10 +6,34 @@ class ThemeRoller extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+
+    this.shadowRoot.innerHTML = `
+      <style>
+        div#themeRoller {
+          position: fixed;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          cursor: pointer;
+          bottom: 20px;
+          right: 20px;
+          background-color: var(--primary-color);
+          z-index: 1000;
+          border: 2px solid rgba(255, 255, 255, 1);
+        }
+      </style>
+      <div id="themeRoller"></div>
+    `;
   }
 
   connectedCallback() {
-    this.render();
+    const circle = this.shadowRoot.getElementById("themeRoller");
+    this.makeDraggable(circle);
+
+    circle.addEventListener("click", () => {
+      console.log("Clicked circle");
+      this.nextTheme();
+    });
   }
 
   static get observedAttributes() {
@@ -66,29 +90,6 @@ class ThemeRoller extends HTMLElement {
 
     document.addEventListener("mouseup", () => {
       isDragging = false;
-    });
-  }
-
-  render() {
-    const circle = document.createElement("div");
-    circle.style.position = "fixed";
-    circle.style.width = "50px";
-    circle.style.height = "50px";
-    circle.style.borderRadius = "50%";
-    circle.style.cursor = "pointer";
-    circle.style.bottom = "20px";
-    circle.style.right = "20px";
-    circle.style.backgroundColor = "var(--primary-color)";
-    circle.style.zIndex = "1000";
-    circle.style.border = "2px solid rgba(255, 255, 255, 1)";
-
-    this.shadowRoot.appendChild(circle);
-
-    this.makeDraggable(circle);
-
-    circle.addEventListener("click", () => {
-      console.log("Clicked circle");
-      this.nextTheme();
     });
   }
 }
