@@ -1,18 +1,75 @@
-const themes = [
-  "pink-theme",
-  "purple-theme",
-  "blue-theme",
-  "green-theme",
-  "orange-theme",
-  "dark-theme",
-];
-let currentThemeIndex = 0;
-
+"use strict";
 class ThemeRoller extends HTMLElement {
+  #themes = [];
+  #currentTheme = "";
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+  }
 
+  connectedCallback() {
+    this.render();
+  }
+
+  static get observedAttributes() {
+    return ["themes", "current-theme"];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === "themes") {
+      this.#themes = newValue.split(",");
+      console.log("Themes", this.#themes);
+    }
+
+    if (name === "current-theme") {
+      this.#currentTheme = newValue;
+      console.log("Current theme", this.#currentTheme);
+      this.nextTheme();
+    }
+  }
+
+  nextTheme() {
+    const currentThemeIndex = this.#themes.indexOf(this.#currentTheme);
+    console.log("Current theme index", currentThemeIndex);
+    if (currentThemeIndex === -1) {
+      console.error(
+        `Current theme [${currentTheme}] not found in themes array`
+      );
+      return;
+    }
+
+    const nextThemeIndex = (currentThemeIndex + 1) % this.#themes.length;
+    const nextTheme = this.#themes[nextThemeIndex];
+    this.#currentTheme = nextTheme;
+
+    document.body.classList.remove(...this.#themes);
+    document.body.classList.add(nextTheme);
+  }
+
+  makeDraggable(element) {
+    let isDragging = false;
+    let offset = { x: 0, y: 0 };
+
+    element.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      offset.x = e.offsetX;
+      offset.y = e.offsetY;
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (isDragging) {
+        element.style.right = window.innerWidth - e.clientX - offset.x + "px";
+        element.style.bottom = window.innerHeight - e.clientY - offset.y + "px";
+      }
+    });
+
+    document.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+  }
+
+  render() {
     const circle = document.createElement("div");
     circle.style.position = "fixed";
     circle.style.width = "50px";
@@ -29,33 +86,9 @@ class ThemeRoller extends HTMLElement {
 
     this.makeDraggable(circle);
 
-    circle.addEventListener("click", function () {
-      currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-      const nextTheme = themes[currentThemeIndex];
-      document.body.classList.remove(...themes);
-      document.body.classList.add(nextTheme);
-    });
-  }
-
-  makeDraggable(element) {
-    let isDragging = false;
-    let offset = { x: 0, y: 0 };
-
-    element.addEventListener("mousedown", function (e) {
-      isDragging = true;
-      offset.x = e.offsetX;
-      offset.y = e.offsetY;
-    });
-
-    document.addEventListener("mousemove", function (e) {
-      if (isDragging) {
-        element.style.right = window.innerWidth - e.clientX - offset.x + "px";
-        element.style.bottom = window.innerHeight - e.clientY - offset.y + "px";
-      }
-    });
-
-    document.addEventListener("mouseup", function () {
-      isDragging = false;
+    circle.addEventListener("click", () => {
+      console.log("Clicked circle");
+      this.nextTheme();
     });
   }
 }
