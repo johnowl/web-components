@@ -1,4 +1,27 @@
 "use strict";
+
+HTMLElement.prototype.makeDraggable = function () {
+  let isDragging = false;
+  let offset = { x: 0, y: 0 };
+
+  this.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    offset.x = e.offsetX;
+    offset.y = e.offsetY;
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (isDragging) {
+      this.style.right = window.innerWidth - e.clientX - offset.x + "px";
+      this.style.bottom = window.innerHeight - e.clientY - offset.y + "px";
+    }
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+};
+
 class ThemeRoller extends HTMLElement {
   #themes = [];
   #currentTheme = "";
@@ -28,8 +51,7 @@ class ThemeRoller extends HTMLElement {
 
   connectedCallback() {
     const circle = this.shadowRoot.getElementById("themeRoller");
-    this.makeDraggable(circle);
-
+    circle.makeDraggable();
     circle.addEventListener("click", () => {
       console.log("Clicked circle");
       this.nextTheme();
@@ -69,28 +91,6 @@ class ThemeRoller extends HTMLElement {
 
     document.body.classList.remove(...this.#themes);
     document.body.classList.add(nextTheme);
-  }
-
-  makeDraggable(element) {
-    let isDragging = false;
-    let offset = { x: 0, y: 0 };
-
-    element.addEventListener("mousedown", (e) => {
-      isDragging = true;
-      offset.x = e.offsetX;
-      offset.y = e.offsetY;
-    });
-
-    document.addEventListener("mousemove", (e) => {
-      if (isDragging) {
-        element.style.right = window.innerWidth - e.clientX - offset.x + "px";
-        element.style.bottom = window.innerHeight - e.clientY - offset.y + "px";
-      }
-    });
-
-    document.addEventListener("mouseup", () => {
-      isDragging = false;
-    });
   }
 }
 
